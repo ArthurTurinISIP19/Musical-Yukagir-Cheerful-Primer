@@ -1696,6 +1696,7 @@ GameObject:
   m_Component:
   - component: {fileID: 644036459}
   - component: {fileID: 644036460}
+  - component: {fileID: 644036461}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1772,13 +1773,142 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 99fbd965996853945942b77976d7fc02, type: 3}
   _originalText: {fileID: 1592364915}
   _translateText: {fileID: 1734839270}
-  _characters: []
+  _buttonsCharacter:
+  - {fileID: 1061293985}
+  - {fileID: 648628085}
+  - {fileID: 513021553}
+  - {fileID: 816438601}
+  - {fileID: 1418359257}
+  - {fileID: 1605222360}
+  - {fileID: 673814156}
+  - {fileID: 811641848}
+  - {fileID: 2035157738}
+  - {fileID: 920454365}
+  - {fileID: 688295789}
+  - {fileID: 696946240}
+  - {fileID: 1228777624}
+  - {fileID: 387749462}
+  - {fileID: 1826305310}
+  - {fileID: 1069659957}
+  - {fileID: 296859326}
+  - {fileID: 1467672250}
+  - {fileID: 845515846}
+  - {fileID: 970466627}
+  - {fileID: 47647299}
+  - {fileID: 1465295490}
+  - {fileID: 59438247}
+  - {fileID: 1977115620}
+  - {fileID: 1806153783}
+  - {fileID: 4446340}
+  - {fileID: 638927045}
+  - {fileID: 1405851355}
+  - {fileID: 942458001}
+  - {fileID: 762957908}
+  - {fileID: 1771594530}
+  - {fileID: 1365490558}
+  - {fileID: 688414608}
+  - {fileID: 1169037482}
+  - {fileID: 786219844}
+  - {fileID: 1011760297}
+  - {fileID: 373851044}
+  - {fileID: 505710230}
+  - {fileID: 243263066}
+  _charactersAudioClipArray:
+  - {fileID: 8300000, guid: 61446d461e95d834894cf5548332cf68, type: 3}
+  - {fileID: 8300000, guid: 413f39735ba879943b5203f64453d332, type: 3}
+  - {fileID: 8300000, guid: 831532100ef688649bba04816c1ca8ff, type: 3}
+  - {fileID: 8300000, guid: 880b6c72660c958478b51200b3b04941, type: 3}
+  - {fileID: 8300000, guid: 2ac506e43ffd7264caccf02b544b95a5, type: 3}
+  - {fileID: 8300000, guid: 7d7ca57b9c41eb449939a5fc700f6d7e, type: 3}
+  _wordsAudioClipArray:
+  - {fileID: 8300000, guid: 375d802c7e7cf3d459b301572ae73371, type: 3}
+  source: {fileID: 644036461}
+  _charactersCapital:
+  - "\u0410"
+  - "\u0411"
+  - "\u0412"
+  - "\u0413"
+  - "\u0494"
+  - "\u0414"
+  - "\u0414\u044C"
+  - "\u0415"
+  - "\u0401"
+  - "\u0416"
+  - "\u0417"
+  - "\u0418"
+  - "\u0419"
+  - "\u041A"
+  - "\u041B"
+  - "\u041B\u044C"
+  - "\u041C"
+  - "\u041D"
+  - "\u041D\u044C"
+  - N
+  - "\u041E"
+  - "\u04E8"
+  - "\u041F"
+  - "\u0420"
+  - "\u0421"
+  - "\u0422"
+  - "\u0423"
+  - "\u0424"
+  - "\u0425"
+  - "\u0426"
+  - "\u0427"
+  - "\u0428"
+  - "\u0429"
+  - "\u042A"
+  - "\u042B"
+  - "\u042C"
+  - "\u042D"
+  - "\u042E"
+  - "\u042F"
+  _charactersCursive:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   _originalWords:
   - "\u0410\u0431\u0443\u0447\u0438\u044D"
   - "\u0411\u0438\u0431\u0430"
   - "\u0412\u0438\u0432\u0430"
   - "\u0413\u0438\u0433\u0430"
-  - 
+  - " \u0494\u0495\u04A4\u04A5\u04E8\u04E9\u04BA\u04BB\u04AE\u04AF"
   - 
   - 
   - 
@@ -1853,6 +1983,102 @@ MonoBehaviour:
   - 
   - 
   - 
+--- !u!82 &644036461
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 644036458}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &648628083
 GameObject:
   m_ObjectHideFlags: 0
@@ -5285,7 +5511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1764706, g: 0.20000002, b: 0.5764706, a: 1}
+  m_Color: {r: 0.5066305, g: 0.5073503, b: 0.5188679, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5305,7 +5531,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0410\u0431\u0443\u0447\u0438\u044D"
+  m_Text: "\u0430\u0431\u0443\u0447\u0438\u044D"
 --- !u!222 &1592364916
 CanvasRenderer:
   m_ObjectHideFlags: 0
