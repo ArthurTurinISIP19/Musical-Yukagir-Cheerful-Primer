@@ -33,8 +33,13 @@ public class Manager : MonoBehaviour
     private static int _characterIndexInWord;
     public static int _currentCharacterIndexInAphabit;
 
+    [SerializeField] private Color _showTranslateColor;
     private static string _colorRedBegin = "<color=#f55f5f>";
     private static string _colorRedEnd = "</color>";
+
+    private IEnumerator WaitAndSoundCoroutine;
+    private IEnumerator ShowTranslateCoroutine;
+
 
     private void Start()
     {
@@ -42,6 +47,11 @@ public class Manager : MonoBehaviour
         _currentCharacterIndexInAphabit = 0;
         _originalText.text = _allWords[_currentCharacterIndexInAphabit]._name;
         _translateText.text = _allWords[_currentCharacterIndexInAphabit]._translateName;
+        _translateText.alpha = 0;
+
+        //WaitAndSoundCoroutine = StartCoroutine(WaitAndSound());
+        //ShowTranslateCoroutine = StartCoroutine(ShowTranslate());
+
         SeparateWordOnCharacters();
         AddListenersToButtons();
     }
@@ -51,14 +61,8 @@ public class Manager : MonoBehaviour
         for (int i = 0; i < _buttonsCharacter.Length; i++)
         {
             int closureIndex = i;
-            _buttonsCharacter[closureIndex].onClick.AddListener(() => TaskOnClick(closureIndex));
+            _buttonsCharacter[closureIndex].onClick.AddListener(() => CheckCharacterInWord(closureIndex));
         }
-    }
-
-    public void TaskOnClick(int buttonIndex)
-    {
-        SoundCharacter(buttonIndex);
-        CheckCharacterInWord(buttonIndex);
     }
 
     public void NextCharacter()
@@ -81,6 +85,12 @@ public class Manager : MonoBehaviour
 
     private void ChangeCharacter()
     {
+        //if (ShowTranslateCoroutine != null)
+        //    StopCoroutine(ShowTranslateCoroutine);
+        //    _translateText.alpha = 0f;
+        StopAllCoroutines();
+        _translateText.alpha = 0f;
+
         _currentWordNumber = _currentCharacterIndexInAphabit;
         ChangeCharacterImage(_currentCharacterIndexInAphabit);
         ChangeTartgetWordText(_currentCharacterIndexInAphabit);
@@ -111,6 +121,7 @@ public class Manager : MonoBehaviour
     }
     private void ChangeTranslatetWordText(int wordNum)
     {
+        _translateText.alpha = 0;
         _translateText.text = _allWords[wordNum]._translateName;
     }
 
@@ -124,13 +135,13 @@ public class Manager : MonoBehaviour
         if (_charactersCapital[charNum] == _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] 
             || _charactersCapital[charNum].ToLower() == _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord])
         {
+            SoundCharacter(charNum);
             PaintAndFillCharacterInWord();
         }
     }
 
     private void PaintAndFillCharacterInWord()
     {
-        //242 25 25 
         _wordByChar[_characterIndexInWord] = _colorRedBegin + _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] + _colorRedEnd;
         string result = string.Join("", _wordByChar);
         _originalText.text = result;
@@ -143,9 +154,12 @@ public class Manager : MonoBehaviour
 
     private void OnEndWord()
     {
+        _translateText.color = Color.Lerp(_translateText.color, _showTranslateColor, Time.deltaTime * 0.5f);
+
         _characterIndexInWord = 0;
         _wordByChar.Clear();
         StartCoroutine(WaitAndSound());
+        StartCoroutine(ShowTranslateCoroutine = ShowTranslate());
     }
 
     private IEnumerator WaitAndSound()
@@ -155,4 +169,21 @@ public class Manager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         NextCharacter();
     }
+
+    private IEnumerator ShowTranslate()
+    {
+        yield return new WaitForEndOfFrame();
+
+        ShowTranslateCoroutine = ShowTranslate();
+        if (_translateText.alpha <= 0.99f)
+        {
+            _translateText.color = Color.Lerp(_translateText.color, _showTranslateColor, 0.02f);
+            StartCoroutine(ShowTranslateCoroutine);
+        }
+        else
+        {
+            _translateText.alpha = 1f;
+            StopCoroutine(ShowTranslateCoroutine);
+        }
+    }    
 }
