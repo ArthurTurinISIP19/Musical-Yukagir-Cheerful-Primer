@@ -164,7 +164,7 @@ public class Manager : MonoBehaviour
 
     private IEnumerator WaitAndSound()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         _soundManager.SoundFullWord(_currentWordNumber);
         yield return new WaitForSeconds(1f);
         NextCharacter();
