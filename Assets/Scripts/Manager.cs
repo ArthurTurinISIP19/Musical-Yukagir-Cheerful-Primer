@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,10 @@ public class Manager : MonoBehaviour
     [Header("SoundManager")]
     [SerializeField] private SoundManager _soundManager;
 
+    [Header("Exception")]
+    [SerializeField] private TextMeshProUGUI _exceptionTextField;
+    private int[] _exceptionArray = { 7, 8, 9, 10, 23, 27, 29, 31, 32, 34, 37, 38 };
+
     private List<string> _wordByChar = new List<string>();
     private static int _currentWordNumber;
     private static int _characterIndexInWord;
@@ -48,12 +53,10 @@ public class Manager : MonoBehaviour
         _originalText.text = _allWords[_currentCharacterIndexInAphabit]._name;
         _translateText.text = _allWords[_currentCharacterIndexInAphabit]._translateName;
         _translateText.alpha = 0;
+        _exceptionTextField.enabled = false;
 
-        //WaitAndSoundCoroutine = StartCoroutine(WaitAndSound());
-        //ShowTranslateCoroutine = StartCoroutine(ShowTranslate());
-
-        SeparateWordOnCharacters();
         AddListenersToButtons();
+        SeparateWordOnCharacters();
     }
 
     private void AddListenersToButtons()
@@ -67,7 +70,7 @@ public class Manager : MonoBehaviour
 
     public void NextCharacter()
     {
-        if(_currentCharacterIndexInAphabit != _charactersCapital.Length - 1)
+        if (_currentCharacterIndexInAphabit != _charactersCapital.Length - 1)
         {
             _currentCharacterIndexInAphabit++;
             ChangeCharacter();
@@ -78,16 +81,13 @@ public class Manager : MonoBehaviour
     {
         if (_currentCharacterIndexInAphabit != 0)
         {
-            _currentCharacterIndexInAphabit--; 
+            _currentCharacterIndexInAphabit--;
             ChangeCharacter();
         }
     }
 
     private void ChangeCharacter()
     {
-        //if (ShowTranslateCoroutine != null)
-        //    StopCoroutine(ShowTranslateCoroutine);
-        //    _translateText.alpha = 0f;
         StopAllCoroutines();
         _translateText.alpha = 0f;
 
@@ -96,7 +96,30 @@ public class Manager : MonoBehaviour
         ChangeTartgetWordText(_currentCharacterIndexInAphabit);
         ChangeTranslatetWordText(_currentCharacterIndexInAphabit);
         SeparateWordOnCharacters();
-        _characterIndexInWord = 0;
+        CheckOnExceptionWord();
+
+        if (_currentCharacterIndexInAphabit == 4 || _currentCharacterIndexInAphabit == 23)
+        {
+            ChangeCharacterIndexInWord();
+        }
+        else
+        {
+            _characterIndexInWord = 0;
+        }
+    }
+
+    private bool CheckOnExceptionWord()
+    {
+        if (_exceptionArray.Contains(_currentCharacterIndexInAphabit))
+        {
+            _exceptionTextField.enabled = true;
+            return true;
+        }
+        else
+        {
+            _exceptionTextField.enabled = false;
+            return false;
+        }
     }
 
     private void SeparateWordOnCharacters()
@@ -111,7 +134,7 @@ public class Manager : MonoBehaviour
 
     private void ChangeCharacterImage(int charNum)
     {
-      _currentCharacterImage1.sprite = _characterImage[charNum];
+        _currentCharacterImage1.sprite = _characterImage[charNum];
     }
 
     private void ChangeTartgetWordText(int wordNum)
@@ -132,7 +155,7 @@ public class Manager : MonoBehaviour
 
     private void CheckCharacterInWord(int charNum)
     {
-        if (_charactersCapital[charNum] == _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] 
+        if (_charactersCapital[charNum] == _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord]
             || _charactersCapital[charNum].ToLower() == _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord])
         {
             SoundCharacter(charNum);
@@ -142,13 +165,43 @@ public class Manager : MonoBehaviour
 
     private void PaintAndFillCharacterInWord()
     {
-        _wordByChar[_characterIndexInWord] = _colorRedBegin + _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] + _colorRedEnd;
-        string result = string.Join("", _wordByChar);
+        string result = "";
+        if (_characterIndexInWord == 1 && _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord - 1] == "«")
+        {
+            for (int i = 0; i <= 3; i++)
+            {
+                _wordByChar[i] = _colorRedBegin + _allWords[_currentCharacterIndexInAphabit]._characters[i] + _colorRedEnd;
+            }
+        }
+        else
+        {
+            _wordByChar[_characterIndexInWord] = _colorRedBegin + _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] + _colorRedEnd;
+        }
+        result = string.Join("", _wordByChar);
         _originalText.text = result;
+
         _characterIndexInWord++;
+        ChangeCharacterIndexInWord();
+
         if (_characterIndexInWord == _wordByChar.Count())
         {
             OnEndWord();
+        }
+    }
+
+    private void ChangeCharacterIndexInWord()
+    {
+
+        if ((_currentCharacterIndexInAphabit == 4 || _currentCharacterIndexInAphabit == 23) && _characterIndexInWord != _wordByChar.Count())
+        {
+            if (_allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] == "«" ||
+                _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] == "»" ||
+                _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] == " - " ||
+                _allWords[_currentCharacterIndexInAphabit]._characters[_characterIndexInWord] == " ")
+            {
+                _characterIndexInWord++;
+                ChangeCharacterIndexInWord();
+            }
         }
     }
 
@@ -159,14 +212,17 @@ public class Manager : MonoBehaviour
         _characterIndexInWord = 0;
         _wordByChar.Clear();
         StartCoroutine(WaitAndSound());
-        StartCoroutine(ShowTranslateCoroutine = ShowTranslate());
+        if (!CheckOnExceptionWord())
+        {
+            StartCoroutine(ShowTranslateCoroutine = ShowTranslate());
+        }
     }
 
     private IEnumerator WaitAndSound()
     {
         yield return new WaitForSeconds(0.5f);
         _soundManager.SoundFullWord(_currentWordNumber);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.25f);
         NextCharacter();
     }
 
@@ -185,5 +241,5 @@ public class Manager : MonoBehaviour
             _translateText.alpha = 1f;
             StopCoroutine(ShowTranslateCoroutine);
         }
-    }    
+    }
 }

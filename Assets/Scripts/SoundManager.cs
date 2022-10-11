@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class SoundManager : MonoBehaviour
         {
             source.clip = _charactersAudioClipArray[soundNum];
             source.PlayOneShot(source.clip);
-            source.Play();
+            //source.Play();
         }
     }
 
